@@ -7,7 +7,6 @@ class multiclass_lr():
 
         self.W = None
 
-
     @staticmethod
     def softmax(arr):
         """
@@ -104,6 +103,7 @@ class multiclass_lr():
         g = X.T @ (one_hot - softmax_regression.softmax(X @ W.T))
         return -g.T #-g.flatten(order='F')
 
+
     def fit(self, X, y):
         """
         Fit method:
@@ -141,40 +141,48 @@ class knn():
 
     def __init__(self, k):
 
-        # make the object
-        # should I be considering more than this?
         self.k = k
         self.X_train = None
         self.y_train = None
 
-
     def fit(self, y, X):
-
-        # should basically just be loading?
-        # there really isn't anything going on at this stage
+        """
+        Fit method for knn
+        Input:
+         - y: a n x 1 array of targets
+         - X: a n x d array of observations
+        Output:
+         - No return, called for side effect of loading y, X into object
+        """
         self.X_train = X
         self.y_train = y
 
+    @staticmethod
+    def _pred(obs, target, data, k):
+        """
+        Input:
+         - obs:    a 1 x d array (single observation)
+         - target: a n x 1 array of target (corresponds to data)
+         - data:   a n x d array (all the observations)
+         - k:      an integer specifying number of nearby points over which
+                   to take mode
+        Ouput:
+         - mode value in target of k nearest neighbours of obs in data
+        """
+        dist = np.linalg.norm(data - obs, axis=1)
+        close_k = target[np.argsort(dist)][:k]
+        values, counts = np.unique(close_k, return_counts=True)
+        return values[np.argmax(counts)]
+
 
     def predict(self, X):
-
-        # generate empty array to hold predictions dim: n x 1 array
-        prediction = np.zeros(X.shape[0])
-
-        # loop over all observations (rows) in test set
-        for i in range(X.shape[0]):
-
-            # row-wise computation of vector norm of difference between
-            # current obs. and all training obs. will be an n x 1 array
-            distance = np.linalg.norm(self.X_train - X[i,], axis = 1)
-
-            # keep the labels of closest k obs. from training set
-            close_k = self.y_train[np.argsort(distance)][:self.k]
-
-            # find the mode of closest obs. labels
-            values, counts = np.unique(close_k, return_counts=True)
-
-            # insert our prediction for ith obs. into ith position of prediciton
-            prediction[i] = values[np.argmax(counts)]
-
-        return prediction.astype(int) ## we are classifying
+        """
+        Predict method for knn class
+        Input:
+         - X: an m x d array of observations we seek to make predictions on
+        Output:
+         - an m x 1 array of labels assigned to the m observations in X
+        """
+        one_d = lambda obs: knn._pred(obs, self.y_train, self.X_train, self.k)
+        prediction = np.apply_along_axis(one_d, axis=1, arr=X)
+        return prediction.astype('int')
