@@ -1,7 +1,7 @@
 # as it stands we only use numpy in implementation
 import numpy as np
 
-class multiclass_lr():
+class softmax_regression():
 
     def __init__(self):
 
