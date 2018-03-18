@@ -1,1 +1,1 @@
-import .classification
+from . import classification
