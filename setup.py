@@ -9,5 +9,5 @@ setup(name='mymlimp',
       license='LICENSE.md',
       packages=['mymlimp'],
       install_requires=['numpy'],
-      long_description=open(README.md).read()
+      long_description=open('README.md').read()
       )
