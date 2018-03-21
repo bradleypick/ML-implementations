@@ -21,3 +21,11 @@ def test_rowwise_softmax():
 
 	assert X.shape == soft_arr.shape
 	assert np.allclose(row_sum_soft_arr, np.ones(soft_arr.shape[0]))
+
+def test_rowwise_log_sum_exp():
+	"""
+	Test that log_sum_exp @staticmethod for softmax_regression class
+	returns correct shape
+	"""
+	lse_arr = softmax_regression.log_sum_exp(arr=X)
+	assert X.shape[0] == lse_arr.shape[0]
