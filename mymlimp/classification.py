@@ -1,4 +1,5 @@
-# as it stands we only use numpy in implementation
+#!/usr/bin/env python
+
 import numpy as np
 
 class softmax_regression():
@@ -145,7 +146,7 @@ class knn():
         self.X_train = None
         self.y_train = None
 
-    def fit(self, y, X):
+    def fit(self, X, y):
         """
         Fit method for knn
         Input:
