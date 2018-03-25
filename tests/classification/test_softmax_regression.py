@@ -62,3 +62,14 @@ def test_grad_loss():
 	W = np.random.random((k,d))
 	grad_loss = softmax_regression.grad_loss(W, X, y)
 	assert grad_loss.shape == W.shape
+
+def test_fit_predict():
+	"""
+	Tests that fit and predict methods return an array of the correct
+	dimension that has a row sum to one
+	"""
+	model = softmax_regression()
+	model.fit(X,y)
+	pred = model.predict(X)
+	assert pred.shape == (X.shape[0], len(np.unique(y)))
+	assert np.allclose(pred.sum(axis=1), np.ones(X.shape[0]))
