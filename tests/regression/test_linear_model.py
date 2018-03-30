@@ -15,9 +15,17 @@ def test_fit():
     """
     Test fit method produces correct shape weights w
     """
-    pass
+    model = linear_model()
+    model.fit(X,y)
+
+    assert model.w == X.shape[1]
 
 def test_predict():
     """
     Test predict method produces correct shape array of predictions
     """
+    model = linear_model()
+    model.w = np.random.random(size=X.shape[1])
+    pred = model.predict(X)
+
+    assert len(pred) == X.shape[0]
