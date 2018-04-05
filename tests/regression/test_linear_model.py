@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 import sys
-sys.path.append('../')) # not os agnostic
+sys.path.append('../') # not os agnostic
 from sklearn.datasets import load_linnerud
 
 from mymlimp.regression import linear_model
@@ -18,7 +18,7 @@ def test_fit():
     model = linear_model()
     model.fit(X,y)
 
-    assert model.w == X.shape[1]
+    assert len(model.w) == X.shape[1]
 
 def test_predict():
     """
