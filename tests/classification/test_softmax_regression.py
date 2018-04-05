@@ -38,7 +38,7 @@ def test_gradient_descent():
 	f = lambda x: x**2
 	grad_f = lambda x: 2*x
 	w0 = 5.0
-	eps = 0.0001
+	eps = 0.001
 	gd = softmax_regression.gradient_descent(f, grad_f, w0, eps=eps)
 	assert type(gd) == type(w0)
 	assert np.isclose(gd, 0, atol=eps)
