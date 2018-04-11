@@ -21,7 +21,7 @@ class linear_model():
         n, d = X.shape
         if reg is None:
             self.w = np.linalg.solve(X.T @ X, X.T @ y)
-        elif reg == 'l2':
+        elif reg == 'l2' and n > d:
             self.w = np.linalg.solve((X.T @ X + lam*np.eye(n)), X.T @ y)
 
     def predict(self, X):
